@@ -1,34 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask-SocketIO Example</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <title>faceb00k</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Unfocused: Material Icons Outlined -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Focused: Material Icons Round -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
+
 <body>
-    <h1>Flask-SocketIO Example</h1>
-    <div id="messages"></div>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', (event) => {
-            var socket = io();
-
-            socket.on('connect', function() {
-                console.log('Connected to server');
-                socket.emit('client_event', {data: 'Client connected!'});
-            });
-
-            socket.on('server_response', function(msg) {
-                var messages = document.getElementById('messages');
-                var message = document.createElement('div');
-                message.textContent = 'Server: ' + msg.data;
-                messages.appendChild(message);
-            });
-
-            socket.on('disconnect', function() {
-                console.log('Disconnected from server');
-            });
-        });
-    </script>
+    <header>
+        <div class="navbar">
+            <div class="logo">faceb00k</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="user-options">
+                <!-- <a href="#">Inbox</a>
+                <a href="#">Profile</a> -->
+                <span class="material-icons-round">inbox</span>
+                <span class="material-icons-round">person</span>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="side">
+            <div class="sidebar-container">
+                <aside class="sidebar left">
+                    <ul>
+                        <!-- <li><a href="#">Home</a></li>
+                        <li><a href="#">Friends</a></li>
+                        <li><a href="#">Groups</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Saved</a></li> -->
+                        <!-- <li>
+                            <div class="icon-label">
+                                <span class="material-icons-outlined">home</span>
+                                <a href="#">Home</a>
+                            </div>
+                        </li> -->
+                        <li>
+                            <div class="icon-label focused">
+                                <span class="material-icons-round">home</span>
+                                <a href="#">Home</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon-label">
+                                <span class="material-icons-outlined">face</span>
+                                <a href="#">Friends</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon-label">
+                                <span class="material-icons-outlined">group</span>
+                                <a href="#">Groups</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon-label">
+                                <span class="material-icons-outlined">event</span>
+                                <a href="#">Events</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon-label">
+                                <span class="material-icons-outlined">bookmarks</span>
+                                <a href="#">Saved</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="post">
+                        <a href="#">Post</a>
+                    </div>
+                </aside>
+            </div>
+            <div class="blank"></div>
+        </div>
+        <main class="content">
+            <div class="post-box">
+                <div class="striped-header"></div>
+                <div class="userarea">
+                    <textarea placeholder="What's on your mind?"></textarea>
+                    <button>Post</button>
+                </div>
+            </div>
+            <div class="feed">
+                <div class="post">
+                    <h3>John Doe</h3>
+                    <p>This is a sample post.</p>
+                </div>
+            </div>
+        </main>
+        <div class="side">
+            <div class="sidebar-container">
+                <aside class="sidebar right">
+                    <ul>
+                        <li><a href="#">Suggested</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="blank"></div>
+        </div>
+    </div>
+    <!-- <footer>
+        <p>&copy; 2024 MySite. All rights reserved.</p>
+    </footer> -->
 </body>
+
+<script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // feed
+
+        const feedContainer = document.querySelector('.feed');
+
+        for (let i = 1; i <= 100; i++) {
+            // Create a new post element
+            const post = document.createElement('div');
+            post.className = 'post';
+
+            // Create a heading for the post author
+            const postAuthor = document.createElement('h3');
+            postAuthor.textContent = `User ${i}`;
+
+            // Create a paragraph for the post content
+            const postContent = document.createElement('p');
+            postContent.textContent = `This is post number ${i}. Lorem ipsum dolor sit amet accusam. Feugait ut et dolor tempor vero dolore accumsan in et et dolore dolore invidunt sed. Commodo nam nonummy clita tempor. Et dolore feugiat vel dolore nonummy assum. Lorem sit gubergren dolore illum sit eirmod invidunt iriure sed magna diam nisl. Sed lorem voluptua wisi gubergren et doming kasd sed sadipscing sed erat lorem quod takimata laoreet vulputate dolor accusam. Duis vero et facilisis dolore eirmod clita stet kasd ipsum wisi nonumy sea dolor lorem vero et justo ad. Est clita est ipsum lorem accusam nibh rebum nonumy justo lorem dolore et. Et ea et duo sed imperdiet eirmod vel lorem sadipscing vero eirmod. Invidunt diam et et nisl et et et sit et.`;
+
+            // Append the author and content to the post element
+            post.appendChild(postAuthor);
+            post.appendChild(postContent);
+
+            // Append the post element to the feed container
+            feedContainer.appendChild(post);
+        }
+
+        // init
+
+        updateElementsRect()
+    });
+
+    // document.addEventListener('scroll', function () {
+    //     const stickyPosts = document.querySelectorAll('.feed .post');
+
+    //     const headerRect = document.querySelector('header').getBoundingClientRect();
+
+
+    //     stickyPosts.forEach(header => {
+    //         header.classList.remove('unloaded');
+    //         const rect = header.getBoundingClientRect();
+    //         if (rect.top <= headerRect.height + 20) {
+    //             header.classList.add('stuck');
+    //         } else {
+    //             header.classList.remove('stuck');
+    //         }
+    //     });
+
+    //     const stuckPosts = document.querySelectorAll('.feed .post.stuck');
+    //     const stuckPostsArray = Array.from(stuckPosts);
+    //     stuckPostsArray.pop();  // Remove last one
+    //     stuckPostsArray.forEach(post => {
+    //         post.classList.remove('stuck');
+    //         post.classList.add('unloaded');
+    //     });
+    // });
+
+    function updateElementsRect() {
+        const searchBar = document.querySelector('.search-bar');
+        const searchBarRect = searchBar.getBoundingClientRect();
+
+        const bodyRect = document.querySelector('body').getBoundingClientRect();
+        const leftSearchRect = document.querySelector('.logo').getBoundingClientRect();
+        const rightSearchRect = document.querySelector('.user-options').getBoundingClientRect();
+
+        leftLength = leftSearchRect.left + leftSearchRect.width
+        rightLength = bodyRect.width - rightSearchRect.left
+
+        rightLongerThanLeft = rightLength - leftLength
+
+        console.log(rightLongerThanLeft)
+
+        if (rightLongerThanLeft > 0) {
+            searchBar.style.marginLeft = `${rightLongerThanLeft}px`
+        } else {
+            searchBar.style.marginRight = `${Math.abs(rightLongerThanLeft)}px`
+        }
+
+        // searchBar.style.position = 'fixed'
+        // searchBar.style.top = `${searchBarRect.top}px`
+        // searchBar.style.left = `${postBoxRect.left}px`
+        // searchBar.style.width = `${postBoxRect.width}px`
+    }
+
+    window.addEventListener('resize', function () {
+        updateElementsRect();
+    });
+
+</script>
+
 </html>
